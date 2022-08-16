@@ -27,6 +27,10 @@ export class DroppableEvent<
     return this.detail.droppable;
   }
 
+  get dropzone() {
+    return this.detail.dropzone;
+  }
+
   get dragEvent() {
     return this.detail.dragEvent;
   }
@@ -48,10 +52,6 @@ export class DroppableStartEvent extends DroppableEvent {
     );
   }
 
-  get dropzone() {
-    return this.detail.dropzone;
-  }
-
   clone = (detail: Partial<DroppableStartEvent>) =>
     new DroppableStartEvent({
       ...this.detail,
@@ -68,10 +68,6 @@ export class DroppableDroppedEvent extends DroppableEvent {
       { detail, cancelable: DroppableDroppedEvent.cancelable },
       DroppableDroppedEvent.type
     );
-  }
-
-  get dropzone() {
-    return this.detail.dropzone;
   }
 
   clone = (detail: Partial<DroppableDroppedEvent>) =>
@@ -92,10 +88,6 @@ export class DroppableReturnedEvent extends DroppableEvent {
     );
   }
 
-  get dropzone() {
-    return this.detail.dropzone;
-  }
-
   clone = (detail: Partial<DroppableReturnedEvent>) =>
     new DroppableReturnedEvent({
       ...this.detail,
@@ -112,10 +104,6 @@ export class DroppableStopEvent extends DroppableEvent {
       { detail, cancelable: DroppableStopEvent.cancelable },
       DroppableStopEvent.type
     );
-  }
-
-  get dropzone() {
-    return this.detail.dropzone;
   }
 
   clone = (detail: Partial<DroppableStopEvent>) =>
