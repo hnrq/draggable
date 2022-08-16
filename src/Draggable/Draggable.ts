@@ -21,7 +21,7 @@ import {
   DragEventMap,
 } from './DragEvent';
 import {
-  DraggableInitializedEvent,
+  DraggableInitializeEvent,
   DraggableDestroyEvent,
 } from './DraggableEvent';
 import Emitter from './Emitter';
@@ -195,7 +195,7 @@ export default class Draggable {
     this.addPlugin(...[...defaultPlugins, ...this.options.plugins]);
     this.addSensor(...[...defaultSensors, ...this.options.sensors]);
 
-    const draggableInitializedEvent = new DraggableInitializedEvent({
+    const draggableInitializedEvent = new DraggableInitializeEvent({
       draggable: this,
     });
 
