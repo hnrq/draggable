@@ -5,13 +5,13 @@ export type SnappableEventMap = {
   'snap:out': SnapOutEvent;
 };
 
-export type SnappableEventDetail = {
+export type SnapEventDetail = {
   dragEvent: DragEvent;
-  snappable: HTMLElement;
+  snappingElement: HTMLElement;
 };
 
 export class SnapEvent<
-  T extends SnappableEventDetail = SnappableEventDetail
+  T extends SnapEventDetail = SnapEventDetail
 > extends CustomEvent<T> {
   constructor(
     eventInitDict?: CustomEventInit<T>,
@@ -24,22 +24,22 @@ export class SnapEvent<
     return this.detail.dragEvent;
   }
 
-  get snappable() {
-    return this.detail.snappable;
+  get snappingElement() {
+    return this.detail.snappingElement;
   }
 
-  clone = (detail: Partial<SnappableEventDetail>) =>
+  clone = (detail: Partial<SnapEventDetail>) =>
     new SnapEvent({ detail: { ...this.detail, ...detail } }, SnapEvent.type);
 
   static type = 'snap';
 }
 
 export class SnapInEvent extends SnapEvent {
-  constructor(detail: SnappableEventDetail) {
+  constructor(detail: SnapEventDetail) {
     super({ detail, cancelable: SnapInEvent.cancelable }, SnapInEvent.type);
   }
 
-  clone = (detail: Partial<SnappableEventDetail>) =>
+  clone = (detail: Partial<SnapEventDetail>) =>
     new SnapInEvent({ ...this.detail, ...detail });
 
   static type = 'snap:in';
@@ -47,11 +47,11 @@ export class SnapInEvent extends SnapEvent {
 }
 
 export class SnapOutEvent extends SnapEvent {
-  constructor(detail: SnappableEventDetail) {
+  constructor(detail: SnapEventDetail) {
     super({ detail, cancelable: SnapOutEvent.cancelable }, SnapOutEvent.type);
   }
 
-  clone = (detail: Partial<SnappableEventDetail>) =>
+  clone = (detail: Partial<SnapEventDetail>) =>
     new SnapOutEvent({ ...this.detail, ...detail });
 
   static type = 'snap:out';

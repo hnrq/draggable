@@ -6,7 +6,7 @@ import {
 } from '../../Draggable';
 import { DroppableEvent, DroppableStopEvent } from '../../Droppable';
 import AbstractPlugin from '../../shared/AbstractPlugin';
-import { SnapInEvent, SnapOutEvent } from './SnappableEvent';
+import { SnapInEvent, SnapOutEvent } from './SnapEvent';
 
 const onDragStart = Symbol('onDragStart');
 const onDragStop = Symbol('onDragStop');
@@ -73,7 +73,7 @@ export default class Snappable extends AbstractPlugin {
 
     const snapInEvent = new SnapInEvent({
       dragEvent: event instanceof DroppableEvent ? event.dragEvent : event,
-      snappable:
+      snappingElement:
         (<DragOverEvent>event).over ?? (<DroppableEvent>event).droppable,
     });
 
@@ -105,7 +105,7 @@ export default class Snappable extends AbstractPlugin {
 
     const snapOutEvent = new SnapOutEvent({
       dragEvent: event instanceof DroppableStopEvent ? event.dragEvent : event,
-      snappable:
+      snappingElement:
         (<DragOutEvent>event).over ?? (<DroppableStopEvent>event).droppable,
     });
 
