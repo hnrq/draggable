@@ -544,7 +544,7 @@
 		// --- cube
 		.shadow {
 			opacity: 1; // ensure full opacity
-			color: props.$interaction-shadow-color;
+			fill: props.$interaction-shadow-color;
 		}
 
 		.shadow--interaction-hover {
