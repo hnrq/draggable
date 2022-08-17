@@ -1,3 +1,5 @@
+import { DraggableEmitterMap } from 'Draggable/Draggable';
+
 import Draggable, {
   DragEvent,
   DraggableOptions,
@@ -10,6 +12,7 @@ import {
   SwappableSwappedEvent,
   SwappableStopEvent,
   SwappableEvent,
+  SwappableEventMap,
 } from './SwappableEvent';
 
 const onDragStart = Symbol('onDragStart');
@@ -19,10 +22,10 @@ const onDragStop = Symbol('onDragStop');
 /**
  * Returns an announcement message when the Draggable element is swapped with another draggable element
  */
-function onSwappableSwappedDefaultAnnouncement({
+const onSwappableSwappedDefaultAnnouncement = ({
   dragEvent,
   swappedElement,
-}: SwappableSwappedEvent) {
+}: SwappableSwappedEvent) => {
   const sourceText =
     dragEvent.source.textContent?.trim() ||
     dragEvent.source.id ||
@@ -33,15 +36,15 @@ function onSwappableSwappedDefaultAnnouncement({
     'swappable element';
 
   return `Swapped ${sourceText} with ${overText}`;
-}
+};
 
-function withTempElement(callback) {
+const withTempElement = (callback) => {
   const tmpElement = document.createElement('div');
   callback(tmpElement);
   tmpElement.remove();
-}
+};
 
-function swap(source, over) {
+const swap = (source, over) => {
   const overParent = over.parentNode;
   const sourceParent = source.parentNode;
 
@@ -50,7 +53,7 @@ function swap(source, over) {
     overParent.insertBefore(source, over);
     sourceParent.insertBefore(over, tmpElement);
   });
-}
+};
 
 const defaultAnnouncements = {
   'swappabled:swapped': onSwappableSwappedDefaultAnnouncement,
@@ -63,8 +66,26 @@ interface SwappableOptions extends Omit<DraggableOptions, 'announcements'> {
   >;
 }
 
+export type SwappableEmitterMap = DraggableEmitterMap & SwappableEventMap;
+
 export default class Swappable extends Draggable {
   lastOver: HTMLElement | null = null;
+
+  declare on: <
+    K extends keyof SwappableEmitterMap,
+    E extends SwappableEmitterMap[K]
+  >(
+    type: K,
+    ...callbacks: Array<(event: E) => void>
+  ) => this;
+
+  declare off: <
+    K extends keyof SwappableEmitterMap,
+    E extends SwappableEmitterMap[K]
+  >(
+    type: K,
+    callback: (event: E) => void
+  ) => this;
 
   constructor(
     containers: NodeList | HTMLElement[] | HTMLElement = [document.body],

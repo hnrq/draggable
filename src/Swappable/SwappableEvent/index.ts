@@ -1,5 +1,12 @@
 import { DragEvent } from '../../Draggable';
 
+export type SwappableEventMap = {
+  'swappable:start': SwappableStartEvent;
+  'swappable:swap': SwappableSwapEvent;
+  'swappable:swapped': SwappableSwappedEvent;
+  'swappable:stop': SwappableStopEvent;
+};
+
 export type SwappableEventDetail = {
   dragEvent: DragEvent;
   over?: HTMLElement;
