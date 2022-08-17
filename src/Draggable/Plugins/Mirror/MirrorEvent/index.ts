@@ -2,6 +2,15 @@ import { DragEvent } from 'Draggable/DragEvent';
 
 import { SensorEvent } from '../../../Sensors';
 
+export type MirrorEventMap = {
+  'mirror:create': MirrorCreateEvent;
+  'mirror:created': MirrorCreatedEvent;
+  'mirror:attached': MirrorAttachedEvent;
+  'mirror:move': MirrorMoveEvent;
+  'mirror:moved': MirrorMovedEvent;
+  'mirror:destroy': MirrorDestroyEvent;
+};
+
 export type MirrorEventDetail = {
   dragEvent: DragEvent;
   sensorEvent: SensorEvent;
@@ -129,15 +138,6 @@ export class MirrorMoveEvent extends MirrorEvent<MirrorMoveEventDetail> {
   static cancelable = true;
 }
 
-/**
- * (Added in: v1.0.0-beta.13)
- *
- * Mirror moved event
- * @class MirrorMovedEvent
- * @module MirrorMovedEvent
- * @extends MirrorEvent
- */
-
 export type MirrorMovedEventDetail = MirrorEventDetail & {
   mirror: HTMLElement;
   passedThreshX: boolean;
@@ -166,13 +166,6 @@ export class MirrorMovedEvent extends MirrorEvent<MirrorMovedEventDetail> {
 
   static type = 'mirror:moved';
 }
-
-/**
- * Mirror destroy event
- * @class MirrorDestroyEvent
- * @module MirrorDestroyEvent
- * @extends MirrorEvent
- */
 
 export type MirrorDestroyEventDetail = MirrorEventDetail & {
   mirror: HTMLElement;

@@ -1,5 +1,17 @@
 import { SensorEvent } from '../Sensors/SensorEvent';
 
+export type DragEventMap = {
+  'drag:start': DragStartEvent;
+  'drag:move': DragMoveEvent;
+  'drag:over': DragOverEvent;
+  'drag:out': DragOutEvent;
+  'drag:over:container': DragOverContainerEvent;
+  'drag:out:container': DragOutContainerEvent;
+  'drag:pressure': DragPressureEvent;
+  'drag:stop': DragStopEvent;
+  'drag:stopped': DragStoppedEvent;
+};
+
 export type DragEventDetail = {
   mirror?: HTMLElement;
   over?: HTMLElement;

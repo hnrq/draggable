@@ -1,3 +1,6 @@
+import { CollidableEventMap } from 'Plugins/Collidable';
+import { SnappableEventMap } from 'Plugins/Snappable';
+
 import {
   SwapAnimationOptions,
   SortAnimationOptions,
@@ -15,6 +18,7 @@ import {
   DragStopEvent,
   DragPressureEvent,
   DragStoppedEvent,
+  DragEventMap,
 } from './DragEvent';
 import {
   DraggableInitializedEvent,
@@ -26,6 +30,7 @@ import {
   Focusable,
   FocusableOptions,
   Mirror,
+  MirrorEventMap,
   MirrorOptions,
   Scrollable,
   ScrollableOptions,
@@ -78,14 +83,6 @@ export const defaultOptions = {
 
 const getSensorEvent = (event: CustomEvent) => event.detail;
 
-function applyUserSelect(element, value) {
-  element.style.webkitUserSelect = value;
-  element.style.mozUserSelect = value;
-  element.style.msUserSelect = value;
-  element.style.oUserSelect = value;
-  element.style.userSelect = value;
-}
-
 export interface DraggableOptions {
   draggable: string;
   distance?: number;
@@ -112,6 +109,12 @@ export interface DraggableOptions {
     sensors?: typeof Sensor[];
   };
 }
+
+export type DraggableEmitterMap = DragEventMap &
+  MirrorEventMap &
+  CollidableEventMap &
+  SnappableEventMap &
+  Record<string, CustomEvent>;
 
 export default class Draggable {
   containers: HTMLElement[];
@@ -278,12 +281,18 @@ export default class Draggable {
     return this;
   }
 
-  on(type, ...callbacks) {
+  on<K extends keyof DraggableEmitterMap, E extends DraggableEmitterMap[K]>(
+    type: K,
+    ...callbacks: Array<(event: E) => void>
+  ) {
     this.emitter.on(type, ...callbacks);
     return this;
   }
 
-  off(type, callback) {
+  off<K extends keyof DraggableEmitterMap, E extends DraggableEmitterMap[K]>(
+    type: K,
+    callback: (event: E) => void
+  ) {
     this.emitter.off(type, callback);
     return this;
   }
@@ -391,7 +400,7 @@ export default class Draggable {
       ...this.getClassNamesFor('container:dragging')
     );
     document.body.classList.add(...this.getClassNamesFor('body:dragging'));
-    applyUserSelect(document.body, 'none');
+    document.body.style.userSelect = 'none';
 
     requestAnimationFrame(() => {
       const oldSensorEvent = getSensorEvent(event);
@@ -542,7 +551,7 @@ export default class Draggable {
       ...this.getClassNamesFor('container:dragging')
     );
     document.body.classList.remove(...this.getClassNamesFor('body:dragging'));
-    applyUserSelect(document.body, '');
+    document.body.style.userSelect = '';
 
     if (this.currentOver) {
       this.currentOver.classList.remove(
