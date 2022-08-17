@@ -1,3 +1,5 @@
+import { DraggableEmitterMap } from 'Draggable/Draggable';
+
 import Draggable, {
   DragOverContainerEvent,
   DragOverEvent,
@@ -11,6 +13,7 @@ import {
   SortableSortedEvent,
   SortableStopEvent,
   SortableEvent,
+  SortableEventMap,
 } from './SortableEvent';
 
 const onDragStart = Symbol('onDragStart');
@@ -22,9 +25,9 @@ const onDragStop = Symbol('onDragStop');
  * Returns announcement message when a Draggable element has been sorted with another Draggable element
  * or moved into a new container
  */
-function onSortableSortedDefaultAnnouncement({
+const onSortableSortedDefaultAnnouncement = ({
   dragEvent,
-}: SortableSortedEvent) {
+}: SortableSortedEvent) => {
   const sourceText =
     dragEvent.source.textContent?.trim() ??
     dragEvent.source.id ??
@@ -45,23 +48,23 @@ function onSortableSortedDefaultAnnouncement({
     // need to figure out how to compute container name
     return `Placed ${sourceText} into a different container`;
   }
-}
+};
 
 const index = (element: HTMLElement) =>
   Array.prototype.indexOf.call(element.parentElement?.children, element);
 
-function moveInsideEmptyContainer(
+const moveInsideEmptyContainer = (
   source: HTMLElement,
   overContainer: HTMLElement
-) {
+) => {
   const oldContainer = source.parentElement;
 
   overContainer.appendChild(source);
 
   return { oldContainer, newContainer: overContainer };
-}
+};
 
-function moveWithinContainer(source: HTMLElement, over: HTMLElement) {
+const moveWithinContainer = (source: HTMLElement, over: HTMLElement) => {
   const oldIndex = index(source);
   const newIndex = index(over);
 
@@ -73,22 +76,22 @@ function moveWithinContainer(source: HTMLElement, over: HTMLElement) {
     oldContainer: source.parentElement,
     newContainer: source.parentElement,
   };
-}
+};
 
-function moveOutsideContainer(
+const moveOutsideContainer = (
   source: HTMLElement,
   over: HTMLElement,
   overContainer: HTMLElement
-) {
+) => {
   const oldContainer = source.parentElement;
 
   if (over) over.parentElement?.insertBefore(source, over);
   else overContainer.appendChild(source);
 
   return { oldContainer, newContainer: source.parentElement };
-}
+};
 
-function move({
+const move = ({
   source,
   over,
   overContainer,
@@ -98,7 +101,7 @@ function move({
   over: HTMLElement;
   overContainer: HTMLElement;
   children: HTMLElement[];
-}) {
+}) => {
   const emptyOverContainer = !children.length;
   const differentContainer = source.parentElement !== overContainer;
   const sameContainer = over && source.parentElement === over.parentElement;
@@ -109,7 +112,7 @@ function move({
   else if (differentContainer)
     return moveOutsideContainer(source, over, overContainer);
   else return null;
-}
+};
 
 const defaultAnnouncements = {
   'sortable:sorted': onSortableSortedDefaultAnnouncement,
@@ -122,6 +125,8 @@ interface SortableOptions extends Omit<DraggableOptions, 'announcements'> {
   >;
 }
 
+export type SortableEmitterMap = DraggableEmitterMap & SortableEventMap;
+
 /**
  * Sortable is built on top of Draggable and allows sorting of draggable elements. Sortable will keep
  * track of the original index and emits the new index as you drag over draggable elements.
@@ -129,6 +134,22 @@ interface SortableOptions extends Omit<DraggableOptions, 'announcements'> {
 export default class Sortable extends Draggable {
   startIndex: number | null;
   startContainer: HTMLElement | null;
+
+  declare on: <
+    K extends keyof SortableEmitterMap,
+    E extends SortableEmitterMap[K]
+  >(
+    type: K,
+    ...callbacks: Array<(event: E) => void>
+  ) => this;
+
+  declare off: <
+    K extends keyof SortableEmitterMap,
+    E extends SortableEmitterMap[K]
+  >(
+    type: K,
+    callback: (event: E) => void
+  ) => this;
 
   constructor(
     containers: NodeList | HTMLElement[] | HTMLElement = [document.body],

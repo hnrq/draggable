@@ -4,6 +4,13 @@ import {
   DragOverEvent,
 } from '../../Draggable';
 
+export type SortableEventMap = {
+  'sortable:start': SortableStartEvent;
+  'sortable:sort': SortableSortEvent;
+  'sortable:sorted': SortableSortedEvent;
+  'sortable:stop': SortableStopEvent;
+};
+
 export type SortableEventDetail = {
   dragEvent?: DragEvent;
   over?: HTMLElement;
