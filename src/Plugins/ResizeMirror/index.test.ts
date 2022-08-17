@@ -9,7 +9,7 @@ import {
   DRAG_DELAY,
   drag,
 } from '../../test-utils/helpers';
-import { Draggable } from '../..';
+import Draggable from '../../Draggable';
 import ResizeMirror from '.';
 
 const sampleMarkup = `
