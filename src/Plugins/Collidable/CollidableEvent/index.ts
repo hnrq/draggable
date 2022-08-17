@@ -1,5 +1,10 @@
 import { DragEvent } from 'Draggable';
 
+export type CollidableEventMap = {
+  'collidable:in': CollidableInEvent;
+  'collidable:out': CollidableOutEvent;
+};
+
 export type CollidableEventData = {
   dragEvent: DragEvent;
 };
