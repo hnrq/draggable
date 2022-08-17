@@ -1,5 +1,12 @@
 import { DragEvent } from '../../Draggable/DragEvent';
 
+export type DroppableEventMap = {
+  'droppable:start': DroppableStartEvent;
+  'droppable:dropped': DroppableDroppedEvent;
+  'droppable:returned': DroppableReturnedEvent;
+  'droppable:stop': DroppableStopEvent;
+};
+
 export type DroppableEventDetail = {
   dragEvent: DragEvent;
   dropzone: HTMLElement;

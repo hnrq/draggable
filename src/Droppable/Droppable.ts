@@ -1,3 +1,5 @@
+import { DraggableEmitterMap } from 'Draggable/Draggable';
+
 import Draggable, {
   DragMoveEvent,
   DragStartEvent,
@@ -10,6 +12,7 @@ import {
   DroppableDroppedEvent,
   DroppableReturnedEvent,
   DroppableStopEvent,
+  DroppableEventMap,
 } from './DroppableEvent';
 
 const onDragStart = Symbol('onDragStart');
@@ -23,10 +26,10 @@ const getDropzones = Symbol('getDropzones');
 /**
  * Returns an announcement message when the Draggable element is dropped into a dropzone element
  */
-function onDroppableDroppedDefaultAnnouncement({
+const onDroppableDroppedDefaultAnnouncement = ({
   dragEvent,
   dropzone,
-}: DroppableDroppedEvent): string {
+}: DroppableDroppedEvent): string => {
   const sourceText =
     dragEvent.source.textContent.trim() ||
     dragEvent.source.id ||
@@ -35,15 +38,15 @@ function onDroppableDroppedDefaultAnnouncement({
     dropzone.textContent.trim() || dropzone.id || 'droppable element';
 
   return `Dropped ${sourceText} into ${dropzoneText}`;
-}
+};
 
 /**
  * Returns an announcement message when the Draggable element has returned to its original dropzone element
  */
-function onDroppableReturnedDefaultAnnouncement({
+const onDroppableReturnedDefaultAnnouncement = ({
   dragEvent,
   dropzone,
-}: DroppableReturnedEvent) {
+}: DroppableReturnedEvent) => {
   const sourceText =
     dragEvent.source.textContent.trim() ||
     dragEvent.source.id ||
@@ -52,7 +55,7 @@ function onDroppableReturnedDefaultAnnouncement({
     dropzone.textContent.trim() || dropzone.id || 'droppable element';
 
   return `Returned ${sourceText} from ${dropzoneText}`;
-}
+};
 
 const defaultAnnouncements = {
   'droppable:dropped': onDroppableDroppedDefaultAnnouncement,
@@ -67,6 +70,8 @@ const defaultClasses = {
 const defaultOptions = {
   dropzone: '.draggable-droppable',
 };
+
+export type DroppableEmitterMap = DraggableEmitterMap & DroppableEventMap;
 
 interface DroppableOptions extends Omit<DraggableOptions, 'classes'> {
   dropzone?: string | HTMLElement[] | (() => HTMLElement);
@@ -84,6 +89,22 @@ export default class Droppable extends Draggable {
   dropzones: HTMLElement[] = null;
   lastDropzone: HTMLElement = null;
   initialDropzone: HTMLElement = null;
+
+  declare on: <
+    K extends keyof DroppableEmitterMap,
+    E extends DroppableEmitterMap[K]
+  >(
+    type: K,
+    ...callbacks: Array<(event: E) => void>
+  ) => this;
+
+  declare off: <
+    K extends keyof DroppableEmitterMap,
+    E extends DroppableEmitterMap[K]
+  >(
+    type: K,
+    callback: (event: E) => void
+  ) => this;
 
   constructor(
     containers: NodeList | HTMLElement[] | HTMLElement = [document.body],
