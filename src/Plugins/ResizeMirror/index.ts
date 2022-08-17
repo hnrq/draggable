@@ -1,6 +1,5 @@
 import { DragOverEvent, MirrorCreatedEvent } from '../../Draggable';
 import AbstractPlugin from '../../shared/AbstractPlugin';
-import { requestNextAnimationFrame } from '../../shared/utils';
 
 const onMirrorCreated = Symbol('onMirrorCreated');
 const onMirrorDestroy = Symbol('onMirrorDestroy');
@@ -88,7 +87,7 @@ export default class ResizeMirror extends AbstractPlugin {
 
       if (!overElement) return;
 
-      requestNextAnimationFrame(() => {
+      requestAnimationFrame(() => {
         const overRect = overElement.getBoundingClientRect();
 
         if (
