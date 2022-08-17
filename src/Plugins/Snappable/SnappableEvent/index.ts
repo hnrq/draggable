@@ -1,6 +1,11 @@
 import { DragEvent } from 'Draggable';
 
-type SnappableEventDetail = {
+export type SnappableEventMap = {
+  'snap:in': SnapInEvent;
+  'snap:out': SnapOutEvent;
+};
+
+export type SnappableEventDetail = {
   dragEvent: DragEvent;
   snappable: HTMLElement;
 };
