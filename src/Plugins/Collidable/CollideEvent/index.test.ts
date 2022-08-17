@@ -1,23 +1,23 @@
-import { CollidableEvent, CollidableInEvent, CollidableOutEvent } from '.';
+import { CollideEvent, CollideInEvent, CollideOutEvent } from '.';
 import { DragEvent } from '../../../Draggable';
 
-describe('CollidableEvent', () => {
+describe('CollideEvent', () => {
   describe('#constructor', () => {
-    it('is instance of CollidableEvent', () => {
-      const event = new CollidableEvent();
+    it('is instance of CollideEvent', () => {
+      const event = new CollideEvent();
 
-      expect(event).toBeInstanceOf(CollidableEvent);
+      expect(event).toBeInstanceOf(CollideEvent);
     });
 
     it('initializes with `type` of `collidable`', () => {
-      const event = new CollidableEvent();
+      const event = new CollideEvent();
 
       expect(event.type).toBe('collidable');
     });
 
     it('initializes with DragEvent', () => {
       const dragEvent = new DragEvent();
-      const event = new CollidableEvent({
+      const event = new CollideEvent({
         detail: { dragEvent },
       });
 
@@ -26,29 +26,29 @@ describe('CollidableEvent', () => {
   });
 });
 
-describe('CollidableInEvent', () => {
+describe('CollideInEvent', () => {
   describe('#constructor', () => {
-    it('is instance of CollidableInEvent', () => {
-      const event = new CollidableInEvent({
+    it('is instance of CollideInEvent', () => {
+      const event = new CollideInEvent({
         collidingElement: document.createElement('div'),
         dragEvent: new DragEvent(),
       });
 
-      expect(event).toBeInstanceOf(CollidableInEvent);
+      expect(event).toBeInstanceOf(CollideInEvent);
     });
 
-    it('initializes with `type` of `collidable:in`', () => {
-      const event = new CollidableInEvent({
+    it('initializes with `type` of `collide:in`', () => {
+      const event = new CollideInEvent({
         collidingElement: document.createElement('div'),
         dragEvent: new DragEvent(),
       });
 
-      expect(event.type).toBe('collidable:in');
+      expect(event.type).toBe('collide:in');
     });
 
     it('initializes with collidingElement', () => {
       const collidingElement = document.createElement('div');
-      const event = new CollidableInEvent({
+      const event = new CollideInEvent({
         collidingElement,
         dragEvent: new DragEvent(),
       });
@@ -58,29 +58,29 @@ describe('CollidableInEvent', () => {
   });
 });
 
-describe('CollidableOutEvent', () => {
+describe('CollideOutEvent', () => {
   describe('#constructor', () => {
-    it('is instance of CollidableOutEvent', () => {
-      const event = new CollidableOutEvent({
+    it('is instance of CollideOutEvent', () => {
+      const event = new CollideOutEvent({
         collidingElement: document.createElement('div'),
         dragEvent: new DragEvent(),
       });
 
-      expect(event).toBeInstanceOf(CollidableOutEvent);
+      expect(event).toBeInstanceOf(CollideOutEvent);
     });
 
-    it('initializes with `type` of `collidable:out`', () => {
-      const event = new CollidableOutEvent({
+    it('initializes with `type` of `collide:out`', () => {
+      const event = new CollideOutEvent({
         collidingElement: document.createElement('div'),
         dragEvent: new DragEvent(),
       });
 
-      expect(event.type).toBe('collidable:out');
+      expect(event.type).toBe('collide:out');
     });
 
     it('initializes with collidingElement', () => {
       const collidingElement = document.createElement('div');
-      const event = new CollidableOutEvent({
+      const event = new CollideOutEvent({
         collidingElement,
         dragEvent: new DragEvent(),
       });

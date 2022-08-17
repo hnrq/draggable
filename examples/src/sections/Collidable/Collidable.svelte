@@ -39,12 +39,12 @@
 				canPlayOverSound = false;
 			});
 
-			draggable.on('collidable:in', ({ collidingElement }: CollidableInEvent) => {
+			draggable.on('collide:in', ({ collidingElement }: CollidableInEvent) => {
 				soundEffects.single.play('cubeCollide');
 				collidingElement.classList.add('colliding');
 			});
 
-			draggable.on('collidable:out', ({ collidingElement }: CollidableOutEvent) => {
+			draggable.on('collide:out', ({ collidingElement }: CollidableOutEvent) => {
 				collidingElement.classList.remove('colliding');
 			});
 		}
