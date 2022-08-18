@@ -82,20 +82,10 @@ describe('TouchSensor', () => {
 
       await expect(contextMenuEvent.defaultPrevented).toBe(true);
 
-      await expect(
-        (<Record<string, unknown>>(<unknown>contextMenuEvent))
-          .stoppedPropagation
-      ).toBe(true);
-
       touchRelease(draggableElement);
       contextMenuEvent = triggerEvent(draggableElement, 'contextmenu');
 
       expect(contextMenuEvent.defaultPrevented).toBe(false);
-
-      expect(
-        (<Record<string, unknown>>(<unknown>contextMenuEvent))
-          .stoppedPropagation
-      ).toBeUndefined();
     });
 
     it('prevents scroll on touchmove while dragging', () => {

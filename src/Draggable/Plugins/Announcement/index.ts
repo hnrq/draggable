@@ -20,7 +20,7 @@ export interface AnnouncementOptions {
 }
 
 /*** Creates region element */
-function createRegion() {
+const createRegion = () => {
   const element = document.createElement('div');
 
   element.setAttribute('id', 'draggable-live-region');
@@ -36,11 +36,11 @@ function createRegion() {
   element.style.overflow = 'hidden';
 
   return element;
-}
+};
 
 const liveRegion: HTMLElement = createRegion();
 
-function announce(message: string, { expire }: AnnouncementOptions) {
+const announce = (message: string, { expire }: AnnouncementOptions) => {
   const element = document.createElement('div');
 
   element.textContent = message;
@@ -49,7 +49,7 @@ function announce(message: string, { expire }: AnnouncementOptions) {
   return setTimeout(() => {
     liveRegion.removeChild(element);
   }, expire);
-}
+};
 
 // Append live region element as early as possible
 document.addEventListener('DOMContentLoaded', () => {
