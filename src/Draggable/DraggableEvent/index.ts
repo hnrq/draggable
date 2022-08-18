@@ -5,6 +5,11 @@ export type DraggableEventDetail = {
   source?: HTMLElement;
 };
 
+export type DraggableEventMap = {
+  'draggable:initialize': DraggableInitializeEvent;
+  'draggable:destroy': DraggableDestroyEvent;
+};
+
 export class DraggableEvent extends CustomEvent<DraggableEventDetail> {
   constructor(
     eventInitDict?: CustomEventInit<DraggableEventDetail>,

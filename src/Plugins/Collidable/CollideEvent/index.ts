@@ -1,4 +1,4 @@
-import { DragEvent } from 'Draggable';
+import { DragEvent } from '../../../Draggable';
 
 export type CollidableEventMap = {
   'collide:in': CollideInEvent;

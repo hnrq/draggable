@@ -96,7 +96,7 @@ describe('Focusable', () => {
 
     waitForRequestAnimationFrame();
 
-    expect(nativelyFocusableElement.tabIndex).toEqual(0);
+    expect(nativelyFocusableElement?.tabIndex).toEqual(0);
   });
 
   it('does not remove tabindex properties for element with tabindex attribute', () => {

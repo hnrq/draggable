@@ -1,4 +1,4 @@
-import { DragEvent } from 'Draggable/DragEvent';
+import { DragEvent } from '../../../DragEvent';
 
 import { SensorEvent } from '../../../Sensors';
 

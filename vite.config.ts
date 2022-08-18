@@ -1,8 +1,5 @@
-/// <reference types="vite/client" />
-
 import { defineConfig } from 'vite';
 import path from 'path';
-import tsconfigPaths from 'vite-tsconfig-paths';
 import dts from 'vite-plugin-dts';
 
 export default defineConfig({
@@ -14,7 +11,6 @@ export default defineConfig({
       skipDiagnostics: false,
       logDiagnostics: true,
     }),
-    tsconfigPaths(),
   ],
   build: {
     outDir: 'dist',
@@ -24,5 +20,8 @@ export default defineConfig({
       formats: ['es'],
       fileName: () => 'index.js',
     },
+  },
+  optimizeDeps: {
+    exclude: ['./src/test-utils/**/*'],
   },
 });
