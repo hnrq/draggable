@@ -5,6 +5,11 @@ export type DraggableEventDetail = {
   source?: HTMLElement;
 };
 
+export type DraggableEventMap = {
+  'draggable:initialize': DraggableInitializeEvent;
+  'draggable:destroy': DraggableDestroyEvent;
+};
+
 export class DraggableEvent extends CustomEvent<DraggableEventDetail> {
   constructor(
     eventInitDict?: CustomEventInit<DraggableEventDetail>,
@@ -17,21 +22,21 @@ export class DraggableEvent extends CustomEvent<DraggableEventDetail> {
     return this.detail.draggable;
   }
 
-  clone(detail: DraggableEventDetail) {
-    return new DraggableEvent(
-      { detail: { ...this.detail, ...detail } },
-      this.type
-    );
+  get source() {
+    return this.detail.source;
   }
+
+  clone = (detail: Partial<DraggableEventDetail>) =>
+    new DraggableEvent({ detail: { ...this.detail, ...detail } }, this.type);
 
   static type = 'draggable';
 }
 
-export class DraggableInitializedEvent extends DraggableEvent {
+export class DraggableInitializeEvent extends DraggableEvent {
   static type = 'draggable:initialize';
 
   constructor(detail: DraggableEventDetail) {
-    super({ detail }, DraggableInitializedEvent.type);
+    super({ detail }, DraggableInitializeEvent.type);
   }
 }
 

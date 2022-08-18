@@ -72,13 +72,13 @@ describe('MouseSensor', () => {
     it('prevents context menu while dragging', () => {
       let contextMenuEvent = triggerEvent(draggableElement, 'contextmenu');
 
-      expect(contextMenuEvent).not.toHaveDefaultPrevented();
+      expect(contextMenuEvent.defaultPrevented).toBe(false);
 
       clickMouse(draggableElement);
       waitForDragDelay();
       contextMenuEvent = triggerEvent(draggableElement, 'contextmenu');
 
-      expect(contextMenuEvent).toHaveDefaultPrevented();
+      expect(contextMenuEvent.defaultPrevented).toBe(true);
 
       releaseMouse(draggableElement);
     });
@@ -86,12 +86,12 @@ describe('MouseSensor', () => {
     it('prevents native drag when initiating drag flow', () => {
       let dragEvent = triggerEvent(draggableElement, 'dragstart');
 
-      expect(dragEvent).not.toHaveDefaultPrevented();
+      expect(dragEvent.defaultPrevented).toBe(false);
 
       clickMouse(draggableElement);
       dragEvent = triggerEvent(draggableElement, 'dragstart');
 
-      expect(dragEvent).toHaveDefaultPrevented();
+      expect(dragEvent.defaultPrevented).toBe(true);
 
       releaseMouse(document.body);
     });
@@ -101,7 +101,7 @@ describe('MouseSensor', () => {
       moveMouse(document, { pageX: 1, pageY: 1 });
       const nativeDragEvent = triggerEvent(draggableElement, 'dragstart');
 
-      expect(nativeDragEvent).not.toHaveDefaultPrevented();
+      expect(nativeDragEvent.defaultPrevented).toBe(false);
 
       releaseMouse(document.body);
     });
@@ -111,7 +111,7 @@ describe('MouseSensor', () => {
       moveMouse(document, { pageX: 1, pageY: 1 });
       const nativeDragEvent = triggerEvent(nonDraggableElement, 'dragstart');
 
-      expect(nativeDragEvent).not.toHaveDefaultPrevented();
+      expect(nativeDragEvent.defaultPrevented).toBe(false);
 
       releaseMouse(document.body);
     });
@@ -191,7 +191,7 @@ describe('MouseSensor', () => {
         'dragstart'
       );
 
-      expect(nativeDragEvent).not.toHaveDefaultPrevented();
+      expect(nativeDragEvent.defaultPrevented).toBe(false);
 
       releaseMouse(document.body);
     });
@@ -204,7 +204,7 @@ describe('MouseSensor', () => {
         'dragstart'
       );
 
-      expect(nativeDragEvent).toHaveDefaultPrevented();
+      expect(nativeDragEvent.defaultPrevented).toBe(true);
 
       releaseMouse(document.body);
     });
@@ -214,7 +214,7 @@ describe('MouseSensor', () => {
       moveMouse(document, { pageX: 1, pageY: 1 });
       const nativeDragEvent = triggerEvent(draggableElement, 'dragstart');
 
-      expect(nativeDragEvent).not.toHaveDefaultPrevented();
+      expect(nativeDragEvent.defaultPrevented).toBe(false);
 
       releaseMouse(document.body);
     });

@@ -56,13 +56,13 @@ A css selector string, an array of elements, a NodeList, a HTMLElement or a func
 
 ### Events
 
-| Name                              | Description                                             | Cancelable | Cancelable action |
-| --------------------------------- | ------------------------------------------------------- | ---------- | ----------------- |
-| [`collidable:in`][collidablein]   | Gets fired when dragging near a collidable element      | false      | -                 |
-| [`collidable:out`][collidableout] | Gets fired when dragging away from a collidable element | false      | -                 |
+| Name                        | Description                                             | Cancelable | Cancelable action |
+| --------------------------- | ------------------------------------------------------- | ---------- | ----------------- |
+| [`collide:in`][collidein]   | Gets fired when dragging near a collidable element      | false      | -                 |
+| [`collide:out`][collideout] | Gets fired when dragging away from a collidable element | false      | -                 |
 
-[collidablein]: CollidableEvent#collidableinevent
-[collidableout]: CollidableEvent#collidableoutevent
+[collidein]: CollidableEvent#collideinevent
+[collideout]: CollidableEvent#collideoutevent
 
 ### Example
 
@@ -75,8 +75,8 @@ const sortable = new Sortable(document.querySelectorAll('ul'), {
   plugins: [Plugins.Collidable],
 });
 
-sortable.on('collidable:in', () => console.log('collidable:in'));
-sortable.on('collidable:out', () => console.log('collidable:out'));
+sortable.on('collide:in', () => console.log('collide:in'));
+sortable.on('collide:out', () => console.log('collide:out'));
 ```
 
 ### Plans

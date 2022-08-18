@@ -1,4 +1,4 @@
-import { DraggableEmitterMap } from 'Draggable/Draggable';
+import { DraggableEmitterMap } from '../Draggable/Draggable';
 
 import Draggable, {
   DragMoveEvent,
@@ -71,7 +71,9 @@ const defaultOptions = {
   dropzone: '.draggable-droppable',
 };
 
-export type DroppableEmitterMap = DraggableEmitterMap & DroppableEventMap;
+export interface DroppableEmitterMap
+  extends DraggableEmitterMap,
+    DroppableEventMap {}
 
 interface DroppableOptions extends Omit<DraggableOptions, 'classes'> {
   dropzone?: string | HTMLElement[] | (() => HTMLElement);

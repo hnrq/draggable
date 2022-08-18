@@ -7,9 +7,7 @@ expect.extend(matchers);
 declare global {
   namespace jest {
     interface Matchers<R = void> {
-      toHaveDefaultPrevented: () => R;
-      toHaveStoppedPropagation: () => R;
-      toHaveBeenCalledWithEvent: (expectedEvent: CustomEvent) => R;
+      toHaveBeenCalledWithEvent: (expectedEvent: unknown) => R;
       toHaveBeenCalledWithEventProperties: (
         expectedEvent: Record<string, unknown>
       ) => R;

@@ -1,7 +1,7 @@
 import { DragMoveEvent, DragStopEvent } from '../../Draggable';
 import AbstractPlugin from '../../shared/AbstractPlugin';
 import { closest } from '../../shared/utils';
-import { CollidableInEvent, CollidableOutEvent } from './CollidableEvent';
+import { CollideInEvent, CollideOutEvent } from './CollideEvent';
 
 const onDragMove = Symbol('onDragMove');
 const onDragStop = Symbol('onDragStop');
@@ -67,16 +67,14 @@ export default class Collidable extends AbstractPlugin {
       this[onRequestAnimationFrame](target)
     );
 
-    if (this.currentlyCollidingElement) {
-      event.preventDefault();
-    }
+    if (this.currentlyCollidingElement) event.preventDefault();
 
-    const collidableInEvent = new CollidableInEvent({
+    const collidableInEvent = new CollideInEvent({
       dragEvent: event,
       collidingElement: this.currentlyCollidingElement,
     });
 
-    const collidableOutEvent = new CollidableOutEvent({
+    const collidableOutEvent = new CollideOutEvent({
       dragEvent: event,
       collidingElement: this.lastCollidingElement,
     });
@@ -106,7 +104,7 @@ export default class Collidable extends AbstractPlugin {
   private [onDragStop] = (event: DragStopEvent) => {
     const lastCollidingElement =
       this.currentlyCollidingElement || this.lastCollidingElement;
-    const collidableOutEvent = new CollidableOutEvent({
+    const collidableOutEvent = new CollideOutEvent({
       dragEvent: event,
       collidingElement: lastCollidingElement,
     });

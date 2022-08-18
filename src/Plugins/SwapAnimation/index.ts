@@ -16,14 +16,14 @@ export interface SwapAnimationOptions {
 }
 
 /*** Resets animation style properties after animation has completed */
-function resetElementOnTransitionEnd(event: Event) {
+const resetElementOnTransitionEnd = (event: Event) => {
   (<HTMLElement>event.target).style.transition = '';
   (<HTMLElement>event.target).style.pointerEvents = '';
   event.target?.removeEventListener(
     'transitionend',
     resetElementOnTransitionEnd
   );
-}
+};
 
 function animate(
   from: HTMLElement,
@@ -57,7 +57,6 @@ function animate(
  * SwapAnimation plugin adds swap animations for sortable
  * @class SwapAnimation
  * @module SwapAnimation
- * @extends AbstractPlugin
  */
 
 export default class SwapAnimation extends AbstractPlugin {

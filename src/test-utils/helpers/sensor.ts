@@ -5,17 +5,17 @@ import {
 } from './constants';
 import { triggerEvent } from './event';
 
-export function waitForDragDelay({
+export const waitForDragDelay = ({
   dragDelay = DRAG_DELAY,
   restoreDateMock = true,
-} = {}) {
+} = {}) => {
   const next = Date.now() + dragDelay + 1;
   const dateMock = jest.spyOn(Date, 'now').mockReturnValue(next);
   jest.advanceTimersByTime(dragDelay + 1);
   if (restoreDateMock) dateMock.mockRestore();
 
   return dateMock;
-}
+};
 
 export const clickMouse = (element, options = {}) =>
   triggerEvent(element, 'mousedown', {

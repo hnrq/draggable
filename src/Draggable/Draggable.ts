@@ -1,5 +1,5 @@
-import { CollidableEventMap } from 'Plugins/Collidable';
-import { SnappableEventMap } from 'Plugins/Snappable';
+import { CollidableEventMap } from '../Plugins/Collidable';
+import { SnappableEventMap } from '../Plugins/Snappable';
 
 import {
   SwapAnimationOptions,
@@ -21,8 +21,9 @@ import {
   DragEventMap,
 } from './DragEvent';
 import {
-  DraggableInitializedEvent,
+  DraggableInitializeEvent,
   DraggableDestroyEvent,
+  DraggableEventMap,
 } from './DraggableEvent';
 import Emitter from './Emitter';
 import {
@@ -110,11 +111,16 @@ export interface DraggableOptions {
   };
 }
 
-export type DraggableEmitterMap = DragEventMap &
-  MirrorEventMap &
-  CollidableEventMap &
-  SnappableEventMap &
-  Record<string, CustomEvent>;
+export interface DraggableEmitterMap
+  extends DragEventMap,
+    MirrorEventMap,
+    CollidableEventMap,
+    SnappableEventMap,
+    DraggableEventMap {
+  [key: string]: CustomEvent;
+}
+
+document.addEventListener('mousedown', (e) => {});
 
 export default class Draggable {
   containers: HTMLElement[];
@@ -195,7 +201,7 @@ export default class Draggable {
     this.addPlugin(...[...defaultPlugins, ...this.options.plugins]);
     this.addSensor(...[...defaultSensors, ...this.options.sensors]);
 
-    const draggableInitializedEvent = new DraggableInitializedEvent({
+    const draggableInitializedEvent = new DraggableInitializeEvent({
       draggable: this,
     });
 
@@ -285,7 +291,7 @@ export default class Draggable {
     type: K,
     ...callbacks: Array<(event: E) => void>
   ) {
-    this.emitter.on(type, ...callbacks);
+    this.emitter.on(type.toString(), ...callbacks);
     return this;
   }
 
@@ -293,7 +299,7 @@ export default class Draggable {
     type: K,
     callback: (event: E) => void
   ) {
-    this.emitter.off(type, callback);
+    this.emitter.off(type.toString(), callback);
     return this;
   }
 

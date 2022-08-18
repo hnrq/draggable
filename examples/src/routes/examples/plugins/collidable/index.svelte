@@ -33,12 +33,12 @@
 			});
 
 			// --- Draggable events --- //
-			droppable.on('collidable:in', ({ collidingElement }: CollidableInEvent) => {
+			droppable.on('collide:in', ({ collidingElement }: CollidableInEvent) => {
 				if (collidingElement.classList.contains(wallClass)) colliding = true;
 				else collidingWithWall = collidingElement.id;
 			});
 
-			droppable.on('collidable:out', ({ collidingElement }: CollidableOutEvent) => {
+			droppable.on('collide:out', ({ collidingElement }: CollidableOutEvent) => {
 				if (collidingElement.classList.contains(wallClass)) colliding = false;
 				else collidingWithWall = undefined;
 			});

@@ -12,7 +12,7 @@ export type SortableEventMap = {
 };
 
 export type SortableEventDetail = {
-  dragEvent?: DragEvent;
+  dragEvent: DragEvent;
   over?: HTMLElement;
   source?: HTMLElement;
   startContainer?: HTMLElement;
@@ -28,7 +28,7 @@ export class SortableEvent<
   T extends SortableEventDetail = SortableEventDetail
 > extends CustomEvent<T> {
   constructor(
-    eventInitDict?: CustomEventInit<T>,
+    eventInitDict: CustomEventInit<T>,
     type: string = SortableEvent.type
   ) {
     super(type, eventInitDict);
@@ -38,7 +38,7 @@ export class SortableEvent<
     return this.detail.dragEvent;
   }
 
-  clone = (detail) =>
+  clone = (detail: Partial<SortableEventDetail>) =>
     new SortableEvent(
       { detail: { ...this.detail, ...detail } },
       SortableEvent.type
@@ -47,8 +47,13 @@ export class SortableEvent<
   static type = 'sortable';
 }
 
+export type SortableStartEventDetail = SortableEventDetail & {
+  startIndex: number;
+  startContainer: HTMLElement;
+};
+
 export class SortableStartEvent extends SortableEvent {
-  constructor(detail: SortableEventDetail) {
+  constructor(detail: SortableStartEventDetail) {
     super(
       { detail, cancelable: SortableStartEvent.cancelable },
       SortableStartEvent.type
@@ -63,8 +68,11 @@ export class SortableStartEvent extends SortableEvent {
     return this.detail.startContainer;
   }
 
-  clone = (detail: SortableEventDetail) =>
-    new SortableStartEvent({ ...this.detail, ...detail });
+  clone = (detail: Partial<SortableStartEventDetail>) =>
+    new SortableStartEvent({
+      ...(this.detail as SortableStartEventDetail),
+      ...detail,
+    });
 
   static type = 'sortable:start';
   static cancelable = true;
@@ -101,7 +109,7 @@ export class SortableSortEvent extends SortableEvent<SortableSortEventDetail> {
     return this.detail.source;
   }
 
-  clone = (detail: SortableSortEventDetail) =>
+  clone = (detail: Partial<SortableSortEventDetail>) =>
     new SortableSortEvent({ ...this.detail, ...detail });
 
   static type = 'sortable:sort';
@@ -141,7 +149,7 @@ export class SortableSortedEvent extends SortableEvent<SortableSortedEventDetail
     return this.detail.newContainer;
   }
 
-  clone = (detail: SortableSortedEventDetail) =>
+  clone = (detail: Partial<SortableSortedEventDetail>) =>
     new SortableSortedEvent({ ...this.detail, ...detail });
 
   static type = 'sortable:sorted';
@@ -175,8 +183,11 @@ export class SortableStopEvent extends SortableEvent {
     return this.detail.newContainer;
   }
 
-  clone = (detail: SortableStopEventDetail) =>
-    new SortableStopEvent({ ...this.detail, ...detail });
+  clone = (detail: Partial<SortableStopEventDetail>) =>
+    new SortableStopEvent({
+      ...this.detail,
+      ...detail,
+    } as SortableStopEventDetail);
 
   static type = 'sortable:stop';
 }

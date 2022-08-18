@@ -1,4 +1,4 @@
-import { DraggableEmitterMap } from 'Draggable/Draggable';
+import { DraggableEmitterMap } from '../Draggable/Draggable';
 
 import Draggable, {
   DragOverContainerEvent,
@@ -125,7 +125,9 @@ interface SortableOptions extends Omit<DraggableOptions, 'announcements'> {
   >;
 }
 
-export type SortableEmitterMap = DraggableEmitterMap & SortableEventMap;
+export interface SortableEmitterMap
+  extends DraggableEmitterMap,
+    SortableEventMap {}
 
 /**
  * Sortable is built on top of Draggable and allows sorting of draggable elements. Sortable will keep

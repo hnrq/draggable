@@ -25,7 +25,7 @@ Read-only property for drag event that triggered this collidable event
 | **Interface**     | `CollidableInEvent` |
 | **Cancelable**    | false               |
 | **Cancel action** | -                   |
-| **type**          | `collidable:in`     |
+| **type**          | `collide:in`        |
 
 ### API
 
@@ -42,7 +42,7 @@ Read-only property for currently colliding element
 | **Interface**     | `CollidableOutEvent` |
 | **Cancelable**    | false                |
 | **Cancel action** | -                    |
-| **type**          | `collidable:out`     |
+| **type**          | `collide:out`        |
 
 ### API
 

@@ -7,7 +7,7 @@ import {
   moveMouse,
   releaseMouse,
   DRAG_DELAY,
-  drag,
+  waitForDragDelay,
 } from '../../test-utils/helpers';
 import Draggable from '../../Draggable';
 import ResizeMirror from '.';
@@ -126,8 +126,10 @@ describe('ResizeMirror', () => {
   });
 
   it('prevents appending mirror when mirror was removed', async () => {
-    drag({ from: smallerDraggable, to: smallerDraggable });
-    drag({ from: smallerDraggable, to: smallerDraggable });
+    clickMouse(smallerDraggable);
+    waitForDragDelay();
+    moveMouse(smallerDraggable);
+    releaseMouse(smallerDraggable);
 
     await waitFor(() => {
       const mirror = queryByRole(sandbox, 'dragmirror');

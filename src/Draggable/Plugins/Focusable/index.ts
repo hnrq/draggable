@@ -1,4 +1,4 @@
-import Draggable from 'Draggable/Draggable';
+import Draggable from '../../Draggable';
 
 import AbstractPlugin from '../../../shared/AbstractPlugin';
 

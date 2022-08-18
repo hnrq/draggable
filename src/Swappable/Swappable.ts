@@ -1,4 +1,4 @@
-import { DraggableEmitterMap } from 'Draggable/Draggable';
+import { DraggableEmitterMap } from '../Draggable/Draggable';
 
 import Draggable, {
   DragEvent,
@@ -66,7 +66,9 @@ interface SwappableOptions extends Omit<DraggableOptions, 'announcements'> {
   >;
 }
 
-export type SwappableEmitterMap = DraggableEmitterMap & SwappableEventMap;
+export interface SwappableEmitterMap
+  extends DraggableEmitterMap,
+    SwappableEventMap {}
 
 export default class Swappable extends Draggable {
   lastOver: HTMLElement | null = null;

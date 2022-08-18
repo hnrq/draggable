@@ -28,7 +28,7 @@ export class SwappableEvent<
     return this.detail.dragEvent;
   }
 
-  clone = (detail: SwappableEventDetail) =>
+  clone = (detail: Partial<SwappableEventDetail>) =>
     new SwappableEvent(
       { detail: { ...this.detail, ...detail } },
       SwappableEvent.type
@@ -45,7 +45,7 @@ export class SwappableStartEvent extends SwappableEvent {
     );
   }
 
-  clone = (detail: SwappableEventDetail) =>
+  clone = (detail: Partial<SwappableEventDetail>) =>
     new SwappableStartEvent({
       ...this.detail,
       ...detail,
@@ -95,8 +95,11 @@ export class SwappableSwappedEvent extends SwappableEvent {
     return this.detail.swappedElement;
   }
 
-  clone = (detail: SwappableSwappedEventDetail) =>
-    new SwappableSwappedEvent({ ...this.detail, ...detail });
+  clone = (detail: Partial<SwappableSwappedEventDetail>) =>
+    new SwappableSwappedEvent({
+      ...this.detail,
+      ...detail,
+    } as SwappableSwappedEventDetail);
 
   static type = 'swappable:swapped';
 }
@@ -106,7 +109,7 @@ export class SwappableStopEvent extends SwappableEvent {
     super({ detail }, SwappableStopEvent.type);
   }
 
-  clone = (detail: SwappableEventDetail) =>
+  clone = (detail: Partial<SwappableEventDetail>) =>
     new SwappableStopEvent({
       ...this.detail,
       ...detail,
