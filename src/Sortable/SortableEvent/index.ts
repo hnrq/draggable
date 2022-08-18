@@ -12,7 +12,7 @@ export type SortableEventMap = {
 };
 
 export type SortableEventDetail = {
-  dragEvent?: DragEvent;
+  dragEvent: DragEvent;
   over?: HTMLElement;
   source?: HTMLElement;
   startContainer?: HTMLElement;
@@ -28,7 +28,7 @@ export class SortableEvent<
   T extends SortableEventDetail = SortableEventDetail
 > extends CustomEvent<T> {
   constructor(
-    eventInitDict?: CustomEventInit<T>,
+    eventInitDict: CustomEventInit<T>,
     type: string = SortableEvent.type
   ) {
     super(type, eventInitDict);
@@ -47,8 +47,13 @@ export class SortableEvent<
   static type = 'sortable';
 }
 
+export type SortableStartEventDetail = SortableEventDetail & {
+  startIndex: number;
+  startContainer: HTMLElement;
+};
+
 export class SortableStartEvent extends SortableEvent {
-  constructor(detail: SortableEventDetail) {
+  constructor(detail: SortableStartEventDetail) {
     super(
       { detail, cancelable: SortableStartEvent.cancelable },
       SortableStartEvent.type
@@ -63,8 +68,11 @@ export class SortableStartEvent extends SortableEvent {
     return this.detail.startContainer;
   }
 
-  clone = (detail: Partial<SortableEventDetail>) =>
-    new SortableStartEvent({ ...this.detail, ...detail });
+  clone = (detail: Partial<SortableStartEventDetail>) =>
+    new SortableStartEvent({
+      ...(this.detail as SortableStartEventDetail),
+      ...detail,
+    });
 
   static type = 'sortable:start';
   static cancelable = true;
