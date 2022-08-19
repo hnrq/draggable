@@ -1,11 +1,10 @@
-import { CollidableEventMap } from '../Plugins/Collidable';
-import { SnappableEventMap } from '../Plugins/Snappable';
-
 import {
   SwapAnimationOptions,
   SortAnimationOptions,
   ResizeMirrorOptions,
 } from '../Plugins';
+import { CollidableEventMap } from '../Plugins/Collidable';
+import { SnappableEventMap } from '../Plugins/Snappable';
 import AbstractPlugin from '../shared/AbstractPlugin';
 import { closest } from '../shared/utils';
 import {
@@ -120,8 +119,6 @@ export interface DraggableEmitterMap
   [key: string]: CustomEvent;
 }
 
-document.addEventListener('mousedown', (e) => {});
-
 export default class Draggable {
   containers: HTMLElement[];
   options: DraggableOptions;
@@ -181,10 +178,6 @@ export default class Draggable {
         sensors: options.exclude?.sensors ?? [],
       },
     };
-
-    this[onDragStop] = this[onDragStop].bind(this);
-    this[onDragPressure] = this[onDragPressure].bind(this);
-    this[dragStop] = this[dragStop].bind(this);
 
     document.addEventListener('drag:start', this[onDragStart], true);
     document.addEventListener('drag:move', this[onDragMove], true);

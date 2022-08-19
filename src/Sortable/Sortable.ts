@@ -1,5 +1,3 @@
-import { DraggableEmitterMap } from '../Draggable/Draggable';
-
 import Draggable, {
   DragOverContainerEvent,
   DragOverEvent,
@@ -7,6 +5,7 @@ import Draggable, {
   DragStopEvent,
   DraggableOptions,
 } from '../Draggable';
+import { DraggableEmitterMap } from '../Draggable/Draggable';
 import {
   SortableStartEvent,
   SortableSortEvent,

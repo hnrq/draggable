@@ -1,11 +1,10 @@
-import { DraggableEmitterMap } from '../Draggable/Draggable';
-
 import Draggable, {
   DragMoveEvent,
   DragStartEvent,
   DragStopEvent,
   DraggableOptions,
 } from '../Draggable';
+import { DraggableEmitterMap } from '../Draggable/Draggable';
 import { closest } from '../shared/utils';
 import {
   DroppableStartEvent,

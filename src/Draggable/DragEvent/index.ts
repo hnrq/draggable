@@ -168,7 +168,7 @@ export class DragOverContainerEvent extends DragEvent<DragOverContainerEventDeta
   }
 
   get over() {
-    return this.detail.overContainer;
+    return this.detail.over;
   }
 
   static type = 'drag:over:container';
