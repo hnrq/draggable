@@ -70,10 +70,10 @@ describe('Swappable', () => {
   });
 
   it('triggers events', () => {
-    const swappableStart = jest.fn();
-    const swappableSwap = jest.fn();
-    const swappableSwapped = jest.fn();
-    const swappableStop = jest.fn();
+    const swappableStart = vi.fn();
+    const swappableSwap = vi.fn();
+    const swappableSwapped = vi.fn();
+    const swappableStop = vi.fn();
 
     swappable.on('swappable:start', swappableStart);
     swappable.on('swappable:swap', swappableSwap);

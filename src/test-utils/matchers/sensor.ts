@@ -3,7 +3,7 @@ export function toHaveTriggeredSensorEvent(
   expectedEventName: string,
   expectedCount: number
 ) {
-  const callback = jest.fn();
+  const callback = vi.fn();
 
   document.addEventListener(expectedEventName, callback);
   received();

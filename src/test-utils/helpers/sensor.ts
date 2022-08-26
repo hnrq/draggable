@@ -10,8 +10,8 @@ export const waitForDragDelay = ({
   restoreDateMock = true,
 } = {}) => {
   const next = Date.now() + dragDelay + 1;
-  const dateMock = jest.spyOn(Date, 'now').mockReturnValue(next);
-  jest.advanceTimersByTime(dragDelay + 1);
+  const dateMock = vi.spyOn(Date, 'now').mockReturnValue(next);
+  vi.advanceTimersByTime(dragDelay + 1);
   if (restoreDateMock) dateMock.mockRestore();
 
   return dateMock;
@@ -78,6 +78,6 @@ export const dragStop = (element, options?) =>
   });
 
 export const getDataTransferStub = () => ({
-  setData: jest.fn(),
+  setData: vi.fn(),
   effectAllowed: null,
 });

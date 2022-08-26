@@ -18,5 +18,5 @@ export const REQUEST_ANIMATION_FRAME_TIMEOUT = 15;
 export function waitForRequestAnimationFrame(
   requestAnimationFrameTimeout = REQUEST_ANIMATION_FRAME_TIMEOUT
 ) {
-  jest.advanceTimersByTime(requestAnimationFrameTimeout + 1);
+  vi.advanceTimersByTime(requestAnimationFrameTimeout + 1);
 }

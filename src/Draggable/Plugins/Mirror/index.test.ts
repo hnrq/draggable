@@ -60,7 +60,7 @@ describe('Mirror', () => {
   it('triggers `mirror:create` event on `drag:start`', () => {
     draggable = new Draggable(container, draggableOptions);
 
-    const mirrorCreateHandler = jest.fn();
+    const mirrorCreateHandler = vi.fn();
     let dragEvent;
 
     draggable.on('mirror:create', mirrorCreateHandler);
@@ -122,7 +122,7 @@ describe('Mirror', () => {
   it('triggers `mirror:created` event on `drag:start`', async () => {
     draggable = new Draggable(container, draggableOptions);
 
-    const mirrorCreatedHandler = jest.fn();
+    const mirrorCreatedHandler = vi.fn();
     let dragEvent;
 
     draggable.on('mirror:created', mirrorCreatedHandler);
@@ -149,7 +149,7 @@ describe('Mirror', () => {
   it('triggers `mirror:attached` event on `drag:start`', async () => {
     draggable = new Draggable(container, draggableOptions);
 
-    const mirrorAttachedHandler = jest.fn();
+    const mirrorAttachedHandler = vi.fn();
     let dragEvent;
 
     draggable.on('mirror:attached', mirrorAttachedHandler);
@@ -183,7 +183,7 @@ describe('Mirror', () => {
   it('triggers `mirror:move` event on `drag:move`', async () => {
     draggable = new Draggable(container, draggableOptions);
 
-    const mirrorMoveHandler = jest.fn();
+    const mirrorMoveHandler = vi.fn();
     const draggableElement = getByText(sandbox, 'First item');
     let dragEvent;
 
@@ -219,7 +219,7 @@ describe('Mirror', () => {
   it('triggers `mirror:moved` event on `drag:move` was done', async () => {
     draggable = new Draggable(container, draggableOptions);
 
-    const mirrorMovedHandler = jest.fn();
+    const mirrorMovedHandler = vi.fn();
     let mirrorMoveEvent;
 
     draggable.on('mirror:moved', mirrorMovedHandler);
@@ -252,7 +252,7 @@ describe('Mirror', () => {
   it('prevents `mirror:move` event trigger when `drag:move` gets canceled', async () => {
     draggable = new Draggable(container, draggableOptions);
 
-    const mirrorMoveHandler = jest.fn();
+    const mirrorMoveHandler = vi.fn();
     draggable.on('mirror:move', mirrorMoveHandler);
     draggable.on('drag:move', (dragEvent) => {
       dragEvent.preventDefault();
@@ -366,7 +366,7 @@ describe('Mirror', () => {
   it('triggers `mirror:destroy` event on `drag:stop`', async () => {
     draggable = new Draggable(container, draggableOptions);
 
-    const mirrorDestroyHandler = jest.fn();
+    const mirrorDestroyHandler = vi.fn();
     let dragEvent;
 
     draggable.on('mirror:destroy', mirrorDestroyHandler);

@@ -1,7 +1,7 @@
 import expectation from './utils';
 
 export function toHaveBeenCalledWithEvent(
-  jestFunction?: jest.Mock,
+  jestFunction?: vi.Mock,
   expectedEventConstructor?: CustomEvent
 ) {
   const mockFunction = jestFunction.mock;
@@ -51,7 +51,7 @@ export function toHaveBeenCalledWithEvent(
 }
 
 export function toHaveBeenCalledWithEventProperties(
-  jestFunction: jest.Mock,
+  jestFunction: vi.Mock,
   expectedProperties: Record<string, unknown>
 ) {
   const event = jestFunction.mock.calls[0][0];

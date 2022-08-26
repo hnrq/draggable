@@ -70,10 +70,10 @@ describe('Sortable', () => {
   });
 
   it('triggers events', () => {
-    const sortableStart = jest.fn();
-    const sortableSort = jest.fn();
-    const sortableSorted = jest.fn();
-    const sortableStop = jest.fn();
+    const sortableStart = vi.fn();
+    const sortableSort = vi.fn();
+    const sortableSorted = vi.fn();
+    const sortableStop = vi.fn();
 
     sortable.on('sortable:start', sortableStart);
     sortable.on('sortable:sort', sortableSort);

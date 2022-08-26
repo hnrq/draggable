@@ -15,7 +15,7 @@ describe('Emitter', () => {
 
   describe('#on', () => {
     it('registers a callback by event type', () => {
-      const callback = jest.fn();
+      const callback = vi.fn();
 
       emitter.on('event', callback);
 
@@ -23,7 +23,7 @@ describe('Emitter', () => {
     });
 
     it('registers multiple callbacks by event type', () => {
-      const callbacks = [jest.fn(), jest.fn()];
+      const callbacks = [vi.fn(), vi.fn()];
 
       emitter.on('event', ...callbacks);
 
@@ -34,7 +34,7 @@ describe('Emitter', () => {
 
   describe('#off', () => {
     it('removes a callback by event type', () => {
-      const callback = jest.fn();
+      const callback = vi.fn();
 
       emitter.on('event', callback);
 
@@ -49,7 +49,7 @@ describe('Emitter', () => {
   describe('#trigger', () => {
     it('triggers callbacks on event with test event', () => {
       const testEvent = new TestEvent();
-      const callback = jest.fn();
+      const callback = vi.fn();
 
       emitter.on('event', callback);
       emitter.trigger(testEvent);
@@ -59,16 +59,16 @@ describe('Emitter', () => {
     });
 
     it('catches errors from listeners and re-throws at the end of the trigger phase', () => {
-      const consoleErrorSpy = jest.fn();
+      const consoleErrorSpy = vi.fn();
 
       const testEvent = new TestEvent();
       const error = new Error('Error');
       const callbacks = [
-        jest.fn(),
+        vi.fn(),
         () => {
           throw error;
         },
-        jest.fn(),
+        vi.fn(),
       ];
 
       /* eslint-disable no-console */

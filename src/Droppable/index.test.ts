@@ -68,7 +68,7 @@ describe('Droppable', () => {
     let originalDragEvents;
 
     beforeEach(() => {
-      eventHandler = jest.fn();
+      eventHandler = vi.fn();
       originalDragEvents = [];
     });
 
@@ -173,7 +173,7 @@ describe('Droppable', () => {
   });
 
   it('prevents drop on occupied droppable element', () => {
-    const handler = jest.fn();
+    const handler = vi.fn();
 
     droppable.on('droppable:dropped', handler);
 
@@ -221,7 +221,7 @@ describe('Droppable', () => {
 
   describe('when dragging element without dropzone as parent', () => {
     it('does not trigger droppable:start event', () => {
-      const droppableStartHandler = jest.fn();
+      const droppableStartHandler = vi.fn();
       droppable.on('droppable:start', droppableStartHandler);
 
       clickMouse(dropzonelessDraggableElement);

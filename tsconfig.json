@@ -3,12 +3,11 @@
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "node",
-    "outDir": "./dist",
     "skipLibCheck": true,
     "declaration": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "types": ["jest"]
+    "types": ["vitest/globals"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "vite.config.ts", "examples"]

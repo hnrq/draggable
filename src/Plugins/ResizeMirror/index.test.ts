@@ -162,7 +162,7 @@ function waitForNextRequestAnimationFrame() {
 }
 
 function withMockedAppendChild(callback) {
-  const mock = jest.fn();
+  const mock = vi.fn();
   const appendChild = Node.prototype.appendChild;
   Node.prototype.appendChild = function (...args) {
     mock(...args);

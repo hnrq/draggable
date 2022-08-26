@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import path from 'path';
 import dts from 'vite-plugin-dts';
 
@@ -23,5 +23,10 @@ export default defineConfig({
   },
   optimizeDeps: {
     exclude: ['./src/test-utils/**/*'],
+  },
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['src/test-utils/setup.ts'],
+    globals: true,
   },
 });
