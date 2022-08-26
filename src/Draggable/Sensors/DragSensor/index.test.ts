@@ -10,6 +10,7 @@ import {
 } from '../../../test-utils/helpers';
 
 import DragSensor from '.';
+import { getByTestId, getByText } from '@testing-library/dom';
 
 const sampleMarkup = `
   <ul>
@@ -20,12 +21,10 @@ const sampleMarkup = `
 `;
 
 describe('DragSensor', () => {
-  let sandbox;
+  let dom;
   let dragSensor;
-  let draggableElement;
-  let nonDraggableElement;
 
-  function setup(optionsParam = {}) {
+  const setup = (optionsParam = {}) => {
     const options = {
       draggable: '.draggable',
       delay: 0,
@@ -33,43 +32,43 @@ describe('DragSensor', () => {
       ...optionsParam,
     };
 
-    sandbox = createSandbox(sampleMarkup);
-    const containers = sandbox.querySelectorAll('ul');
-    draggableElement = sandbox.querySelector('.draggable');
-    nonDraggableElement = sandbox.querySelector('.non-draggable');
-    dragSensor = new DragSensor(containers, options);
+    dom = createSandbox(sampleMarkup);
+    dragSensor = new DragSensor(
+      getByTestId(dom, 'draggable-container'),
+      options
+    );
     dragSensor.attach();
-  }
+  };
 
-  function teardown() {
+  const teardown = () => {
     dragSensor.detach();
-    sandbox.remove();
-  }
+    dom.remove();
+  };
 
   describe('common', () => {
     beforeEach(setup);
     afterEach(teardown);
 
     it('adds draggable attribute on mouse down', () => {
-      expect(draggableElement.draggable).toBe(false);
+      expect(getByText(dom, 'First item').draggable).toBe(false);
 
-      clickMouse(draggableElement);
+      clickMouse(getByText(dom, 'First item'));
       waitForDragDelay();
 
-      expect(draggableElement.draggable).toBe(true);
+      expect(getByText(dom, 'First item').draggable).toBe(true);
 
-      releaseMouse(draggableElement);
+      releaseMouse(getByText(dom, 'First item'));
 
-      expect(draggableElement.draggable).toBe(false);
+      expect(getByText(dom, 'First item').draggable).toBe(false);
     });
 
     it('triggers `drag:start` sensor event on dragstart', () => {
       function dragFlow() {
-        clickMouse(draggableElement);
+        clickMouse(getByText(dom, 'First item'));
         waitForDragDelay();
-        dragStart(draggableElement);
+        dragStart(getByText(dom, 'First item'));
         waitForDragDelay();
-        dragStop(draggableElement);
+        dragStop(getByText(dom, 'First item'));
         releaseMouse(document.body);
       }
 
@@ -77,16 +76,16 @@ describe('DragSensor', () => {
     });
 
     it('cancels `drag:start` event when canceling sensor event', () => {
-      sandbox.addEventListener('drag:start', (event) => {
+      dom.addEventListener('drag:start', (event) => {
         event.detail.preventDefault();
       });
 
       function dragFlow() {
-        clickMouse(draggableElement);
+        clickMouse(getByText(dom, 'First item'));
         waitForDragDelay();
-        dragStart(draggableElement);
+        dragStart(getByText(dom, 'First item'));
         waitForDragDelay();
-        dragStop(draggableElement);
+        dragStop(getByText(dom, 'First item'));
         releaseMouse(document.body);
       }
 
@@ -95,17 +94,17 @@ describe('DragSensor', () => {
 
     it('does not trigger `drag:start` event releasing mouse before timeout', () => {
       function dragFlow() {
-        clickMouse(draggableElement);
+        clickMouse(getByText(dom, 'First item'));
         waitForDragDelay();
-        dragStart(draggableElement);
+        dragStart(getByText(dom, 'First item'));
         waitForDragDelay();
-        dragStop(draggableElement);
+        dragStop(getByText(dom, 'First item'));
         releaseMouse(document.body);
       }
 
       function hastyDragFlow() {
-        clickMouse(draggableElement);
-        dragStart(draggableElement);
+        clickMouse(getByText(dom, 'First item'));
+        dragStart(getByText(dom, 'First item'));
         releaseMouse(document.body);
       }
 
@@ -120,12 +119,12 @@ describe('DragSensor', () => {
 
     it('triggers `drag:move` event while moving the mouse', () => {
       function dragFlow() {
-        clickMouse(draggableElement);
+        clickMouse(getByText(dom, 'First item'));
         waitForDragDelay();
-        dragStart(draggableElement);
+        dragStart(getByText(dom, 'First item'));
         waitForDragDelay();
         dragOver(document.body);
-        dragStop(draggableElement);
+        dragStop(getByText(dom, 'First item'));
         releaseMouse(document.body);
       }
 
@@ -134,12 +133,12 @@ describe('DragSensor', () => {
 
     it('triggers `drag:stop` event when releasing mouse', () => {
       function dragFlow() {
-        clickMouse(draggableElement);
+        clickMouse(getByText(dom, 'First item'));
         waitForDragDelay();
-        dragStart(draggableElement);
+        dragStart(getByText(dom, 'First item'));
         waitForDragDelay();
         dragOver(document.body);
-        dragStop(draggableElement);
+        dragStop(getByText(dom, 'First item'));
         releaseMouse(document.body);
       }
 
@@ -152,14 +151,14 @@ describe('DragSensor', () => {
         waitForDragDelay();
         dragStart(document.body);
         waitForDragDelay();
-        dragStop(draggableElement);
+        dragStop(getByText(dom, 'First item'));
         releaseMouse(document.body);
 
-        clickMouse(nonDraggableElement);
+        clickMouse(getByText(dom, 'Non draggable item'));
         waitForDragDelay();
-        dragStart(nonDraggableElement);
+        dragStart(getByText(dom, 'Non draggable item'));
         waitForDragDelay();
-        dragStop(draggableElement);
+        dragStop(getByText(dom, 'First item'));
         releaseMouse(document.body);
       }
 
@@ -176,11 +175,11 @@ describe('DragSensor', () => {
 
     it('triggers `drag:start` sensor event after delay', () => {
       function dragFlow() {
-        clickMouse(draggableElement);
+        clickMouse(getByText(dom, 'First item'));
         waitForDragDelay();
-        dragStart(draggableElement);
+        dragStart(getByText(dom, 'First item'));
         waitForDragDelay();
-        dragStop(draggableElement);
+        dragStop(getByText(dom, 'First item'));
         releaseMouse(document.body);
       }
 
@@ -189,18 +188,18 @@ describe('DragSensor', () => {
 
     it('does not trigger `drag:start` event releasing mouse before delay', () => {
       function dragFlow() {
-        clickMouse(draggableElement);
+        clickMouse(getByText(dom, 'First item'));
         waitForDragDelay();
-        dragStart(draggableElement);
+        dragStart(getByText(dom, 'First item'));
         waitForDragDelay();
-        dragStop(draggableElement);
+        dragStop(getByText(dom, 'First item'));
         releaseMouse(document.body);
       }
 
       function hastyDragFlow() {
-        clickMouse(draggableElement);
-        dragStart(draggableElement);
-        dragStop(draggableElement);
+        clickMouse(getByText(dom, 'First item'));
+        dragStart(getByText(dom, 'First item'));
+        dragStop(getByText(dom, 'First item'));
         releaseMouse(document.body);
       }
 
@@ -215,12 +214,12 @@ describe('DragSensor', () => {
 
     it('triggers `drag:move` event while moving the mouse after delay', () => {
       function dragFlow() {
-        clickMouse(draggableElement);
+        clickMouse(getByText(dom, 'First item'));
         waitForDragDelay();
-        dragStart(draggableElement);
+        dragStart(getByText(dom, 'First item'));
         waitForDragDelay();
         dragOver(document.body);
-        dragStop(draggableElement);
+        dragStop(getByText(dom, 'First item'));
         releaseMouse(document.body);
       }
 
