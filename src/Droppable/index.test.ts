@@ -56,11 +56,13 @@ describe('Droppable', () => {
         'droppable:occupied': 'isOccupied',
       },
     });
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
     droppable.destroy();
     sandbox.remove();
+    vi.useRealTimers();
   });
 
   describe('triggers', () => {

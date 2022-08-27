@@ -11,7 +11,6 @@ const onRequestAnimationFrame = Symbol('onRequestAnimationFrame');
  * Collidable plugin which detects colliding elements while dragging
  * @class Collidable
  * @module Collidable
- * @extends AbstractPlugin
  */
 export default class Collidable extends AbstractPlugin {
   /*** Keeps track of currently colliding elements */

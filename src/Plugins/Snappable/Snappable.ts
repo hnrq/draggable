@@ -19,7 +19,6 @@ const onMirrorDestroy = Symbol('onMirrorDestroy');
  * Snappable plugin which snaps draggable elements into place
  * @class Snappable
  * @module Snappable
- * @extends AbstractPlugin
  */
 export default class Snappable extends AbstractPlugin {
   /*** Keeps track of the first source element */

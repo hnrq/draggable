@@ -49,6 +49,7 @@ describe('Sortable', () => {
       draggable: 'li',
       delay: DRAG_DELAY,
     });
+    vi.useFakeTimers();
   });
 
   beforeEach(() => {
@@ -67,6 +68,7 @@ describe('Sortable', () => {
   afterEach(() => {
     sortable.destroy();
     sandbox.remove();
+    vi.useRealTimers();
   });
 
   it('triggers events', () => {
