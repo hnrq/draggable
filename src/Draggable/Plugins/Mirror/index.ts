@@ -1,5 +1,4 @@
 import Draggable from '../../../Draggable/Draggable';
-
 import AbstractPlugin from '../../../shared/AbstractPlugin';
 import { DragMoveEvent, DragStartEvent } from '../../DragEvent';
 import { SensorEvent } from '../../Sensors';
@@ -264,7 +263,7 @@ export default class Mirror extends AbstractPlugin {
       this[getAppendableContainer](source) || sourceContainer;
 
     this.mirror = <HTMLElement>source.cloneNode(true);
-    this.mirror.setAttribute('role', 'dragmirror');
+    this.mirror.setAttribute('data-testid', 'mirror');
 
     const mirrorCreatedEvent = new MirrorCreatedEvent({
       source,
