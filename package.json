@@ -43,8 +43,8 @@
     "format": "prettier --write './src/**/*.{ts,tsx}'",
     "typecheck": "tsc --noEmit",
     "lint": "eslint './src/**.{ts,tsx}' --fix",
-    "test": "vitest run --coverage",
-    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test": "vitest",
     "examples": "vite preview"
   },
   "devDependencies": {

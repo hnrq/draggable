@@ -6,6 +6,6 @@ runs:
   steps:
     - uses: ./.github/actions/pnpm-install
 
-    - run: pnpm test
+    - run: pnpm test:coverage
       shell: bash
       name: Test
