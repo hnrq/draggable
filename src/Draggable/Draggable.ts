@@ -322,17 +322,11 @@ export default class Draggable {
       []
     );
 
-  getDraggableElementsForContainer = (container: HTMLElement) => {
-    const allDraggableElements = <HTMLElement[]>[
-      ...container.querySelectorAll(this.options.draggable),
-    ];
-
-    return [...allDraggableElements].filter((childElement) => {
-      return (
+  getDraggableElementsForContainer = (container: HTMLElement) =>
+    [...container.querySelectorAll(this.options.draggable)].filter(
+      (childElement) =>
         childElement !== this.originalSource && childElement !== this.mirror
-      );
-    });
-  };
+    );
 
   cancel() {
     this[dragStop]();

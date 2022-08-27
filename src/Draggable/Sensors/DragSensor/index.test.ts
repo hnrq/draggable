@@ -13,7 +13,7 @@ import DragSensor from '.';
 import { getByTestId, getByText } from '@testing-library/dom';
 
 const sampleMarkup = `
-  <ul>
+  <ul data-testid="draggable-container">
     <li class="draggable">First item</li>
     <li class="draggable">Second item</li>
     <li class="non-draggable">Non draggable item</li>
@@ -38,11 +38,12 @@ describe('DragSensor', () => {
       options
     );
     dragSensor.attach();
+    vi.useFakeTimers();
   };
 
   const teardown = () => {
     dragSensor.detach();
-    dom.remove();
+    vi.useRealTimers();
   };
 
   describe('common', () => {
@@ -58,7 +59,6 @@ describe('DragSensor', () => {
       expect(getByText(dom, 'First item').draggable).toBe(true);
 
       releaseMouse(getByText(dom, 'First item'));
-
       expect(getByText(dom, 'First item').draggable).toBe(false);
     });
 
