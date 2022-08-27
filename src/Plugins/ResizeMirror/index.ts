@@ -19,7 +19,6 @@ export type ResizeMirrorOptions = Record<string, unknown>;
  * The ResizeMirror plugin resizes the mirror element to the dimensions of the draggable element that the mirror is hovering over
  * @class ResizeMirror
  * @module ResizeMirror
- * @extends AbstractPlugin
  */
 export default class ResizeMirror extends AbstractPlugin {
   options: ResizeMirrorOptions;
@@ -76,9 +75,9 @@ export default class ResizeMirror extends AbstractPlugin {
 
   private [resize] = ({ overContainer, over }: DragOverEvent) => {
     requestAnimationFrame(() => {
-      if (!this.mirror.parentNode) return;
+      if (!this.mirror.parentElement) return;
 
-      if (this.mirror.parentNode !== overContainer)
+      if (this.mirror.parentElement !== overContainer)
         overContainer.appendChild(this.mirror);
 
       const overElement =
@@ -89,7 +88,6 @@ export default class ResizeMirror extends AbstractPlugin {
 
       requestAnimationFrame(() => {
         const overRect = overElement.getBoundingClientRect();
-
         if (
           this.lastHeight === overRect.height &&
           this.lastWidth === overRect.width

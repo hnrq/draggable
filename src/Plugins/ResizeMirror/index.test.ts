@@ -1,4 +1,10 @@
-import { findByRole, waitFor, queryByRole } from '@testing-library/dom';
+import {
+  waitFor,
+  getByText,
+  getAllByTestId,
+  getByTestId,
+  queryByTestId,
+} from '@testing-library/dom';
 
 import {
   createSandbox,
@@ -9,17 +15,18 @@ import {
   DRAG_DELAY,
   waitForDragDelay,
 } from '../../test-utils/helpers';
-import Draggable from '../../Draggable';
+import Draggable, { Scrollable } from '../../Draggable';
 import ResizeMirror from '.';
+import { Mock } from 'vitest';
 
 const sampleMarkup = `
-  <ul class="Container">
+  <ul data-testid="container">
     <li>Smaller item</li>
   </ul>
-  <ul class="Container">
+  <ul data-testid="container">
     <li>Larger item</li>
   </ul>
-  <ul class="Container">
+  <ul data-testid="container">
     <!-- Empty -->
   </ul>
 `;
@@ -35,140 +42,119 @@ describe('ResizeMirror', () => {
     height: smallerDraggableDimensions.height * 2,
   };
 
-  let sandbox;
+  let dom;
   let containers;
-  let draggable;
-  let draggables;
-  let smallerDraggable;
-  let largerDraggable;
+  let draggable: Draggable;
 
   beforeEach(() => {
-    sandbox = createSandbox(sampleMarkup);
-    containers = sandbox.querySelectorAll('.Container');
-    draggables = sandbox.querySelectorAll('li');
+    dom = createSandbox(sampleMarkup);
+    containers = getAllByTestId(dom, 'container');
 
-    smallerDraggable = draggables[0];
-    largerDraggable = draggables[1];
-
-    mockDimensions(smallerDraggable, smallerDraggableDimensions);
-    mockDimensions(largerDraggable, largerDraggableDimensions);
+    mockDimensions(getByText(dom, 'Smaller item'), smallerDraggableDimensions);
+    mockDimensions(getByText(dom, 'Larger item'), largerDraggableDimensions);
 
     draggable = new Draggable(containers, {
       draggable: 'li',
       delay: DRAG_DELAY,
       plugins: [ResizeMirror],
+      exclude: {
+        plugins: [Scrollable],
+      },
+    });
+
+    draggable;
+
+    vi.useFakeTimers();
+    vi.spyOn(global, 'requestAnimationFrame').mockImplementation((cb) => {
+      cb(0);
+      return 0;
     });
   });
 
   afterEach(() => {
     draggable.destroy();
-    sandbox.remove();
+    vi.useRealTimers();
+    (global.requestAnimationFrame as Mock).mockRestore();
   });
 
-  it('resizes mirror based on over element', async () => {
-    clickMouse(smallerDraggable);
+  it('resizes mirror based on over element', () => {
+    const dragItem = getByText(dom, 'Smaller item');
+    clickMouse(dragItem);
+    waitForDragDelay();
 
-    const mirror = await findByRole(sandbox, 'dragmirror');
+    const mirror = getByTestId(dom, 'mirror');
 
-    expect(mirror.style).toMatchObject({
-      width: `${smallerDraggableDimensions.width}px`,
-      height: `${smallerDraggableDimensions.height}px`,
-    });
+    expect(mirror.style.width).toBe(`${smallerDraggableDimensions.width}px`);
+    expect(mirror.style.height).toBe(`${smallerDraggableDimensions.height}px`);
 
-    moveMouse(largerDraggable);
-    waitForRequestAnimationFrame();
-    waitForNextRequestAnimationFrame();
+    moveMouse(getByText(dom, 'Larger item'));
 
-    expect(mirror.style).toMatchObject({
-      width: `${largerDraggableDimensions.width}px`,
-      height: `${largerDraggableDimensions.height}px`,
-    });
+    expect(mirror.style.width).toBe(`${largerDraggableDimensions.width}px`);
+    expect(mirror.style.height).toBe(`${largerDraggableDimensions.height}px`);
 
-    moveMouse(smallerDraggable);
-    waitForRequestAnimationFrame();
-    waitForNextRequestAnimationFrame();
+    moveMouse(dragItem);
 
-    expect(mirror.style).toMatchObject({
-      width: `${smallerDraggableDimensions.width}px`,
-      height: `${smallerDraggableDimensions.height}px`,
-    });
+    expect(mirror.style.width).toBe(`${smallerDraggableDimensions.width}px`);
+    expect(mirror.style.height).toBe(`${smallerDraggableDimensions.height}px`);
 
-    releaseMouse(largerDraggable);
+    releaseMouse(getByText(dom, 'Larger item'));
   });
 
   it('appends mirror in over container', async () => {
-    clickMouse(smallerDraggable);
+    clickMouse(getByText(dom, 'Smaller item'));
+    waitForDragDelay();
 
-    const mirror = await findByRole(sandbox, 'dragmirror');
+    const mirror = getByTestId(dom, 'mirror');
 
-    moveMouse(largerDraggable);
+    moveMouse(getByText(dom, 'Larger item'));
     waitForRequestAnimationFrame();
 
-    expect(mirror.parentNode).toBe(containers[1]);
-
-    releaseMouse(largerDraggable);
+    await waitFor(() => {
+      expect(mirror.parentElement).toBe(containers[1]);
+    });
   });
 
   it('appends mirror only for different parent containers', async () => {
-    clickMouse(smallerDraggable);
+    const dragItem = getByText(dom, 'Smaller item');
+    clickMouse(dragItem);
+    waitForDragDelay();
+    const mockedAppendChild = vi.spyOn(Node.prototype, 'appendChild');
 
-    const mirror = await findByRole(sandbox, 'dragmirror');
-
-    const mockedAppendChild = withMockedAppendChild(() => {
-      moveMouse(smallerDraggable);
-      waitForRequestAnimationFrame();
-    });
+    const mirror = getByTestId(dom, 'mirror');
 
     expect(mirror.parentNode).toBe(draggable.sourceContainer);
     expect(mockedAppendChild).not.toHaveBeenCalled();
 
-    releaseMouse(largerDraggable);
+    releaseMouse(getByText(dom, 'Larger item'));
   });
 
   it('prevents appending mirror when mirror was removed', async () => {
-    clickMouse(smallerDraggable);
+    const dragItem = getByText(dom, 'Smaller item');
+    clickMouse(dragItem);
     waitForDragDelay();
-    moveMouse(smallerDraggable);
-    releaseMouse(smallerDraggable);
+    moveMouse(dragItem);
+    releaseMouse(dragItem);
 
     await waitFor(() => {
-      const mirror = queryByRole(sandbox, 'dragmirror');
+      const mirror = queryByTestId(dom, 'mirror');
       expect(mirror).not.toBeInTheDocument();
     });
   });
 });
 
-function mockDimensions(element, { width = 0, height = 0 }) {
-  Object.assign(element.style, {
-    width: `${width}px`,
-    height: `${height}px`,
-  });
-
-  element.getBoundingClientRect = () => ({
-    width,
-    height,
-    top: 0,
-    left: 0,
-    right: width,
-    bottom: height,
-  });
-
-  return element;
-}
-
-function waitForNextRequestAnimationFrame() {
-  waitForRequestAnimationFrame();
-  waitForRequestAnimationFrame();
-}
-
-function withMockedAppendChild(callback) {
-  const mock = vi.fn();
-  const appendChild = Node.prototype.appendChild;
-  Node.prototype.appendChild = function (...args) {
-    mock(...args);
-    return appendChild.call(this, ...args);
-  };
-  callback();
-  Node.prototype.appendChild = appendChild;
-  return mock;
-}
+const mockDimensions = (
+  element: HTMLElement,
+  { width = 0, height = 0 }: Partial<DOMRect>
+) => {
+  element.style.width = `${width}px`;
+  element.style.height = `${height}px`;
+  element.getBoundingClientRect = () =>
+    ({
+      width,
+      height,
+      top: 0,
+      left: 0,
+      right: width,
+      bottom: height,
+    } as DOMRect);
+};
