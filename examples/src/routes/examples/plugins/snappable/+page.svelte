@@ -3,7 +3,7 @@
 
 	import Block from '@src/components/Block/Block.svelte';
 	import type { DragStartEvent } from '@draggable/Draggable';
-	import { browser } from '$app/env';
+	import { browser } from '$app/environment';
 	import PageHeader from '@src/components/PageHeader/PageHeader.svelte';
 
 	let container: HTMLElement;

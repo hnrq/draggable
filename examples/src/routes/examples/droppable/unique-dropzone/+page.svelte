@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { browser } from '$app/env';
+	import { browser } from '$app/environment';
 
 	import type { DragStartEvent } from '@draggable/Draggable';
 	import type { DroppableDroppedEvent } from '@draggable/Droppable';

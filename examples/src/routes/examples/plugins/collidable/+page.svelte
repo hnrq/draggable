@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { browser } from '$app/env';
+	import { browser } from '$app/environment';
 	import type { CollidableInEvent, CollidableOutEvent } from '@draggable/Plugins/Collidable';
 
 	import Block from '@src/components/Block/Block.svelte';

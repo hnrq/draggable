@@ -17,7 +17,7 @@
 	<footer class="sidebar__footer">
 		<p class="legal-text">
 			<a
-				href="https://shopify.github.io/draggable/"
+				href="https://draggable-puce.vercel.app//"
 				class="link link--dark"
 				title="Visit Draggable JS">draggable.js</a
 			>

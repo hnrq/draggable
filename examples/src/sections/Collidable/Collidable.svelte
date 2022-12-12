@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { browser } from '$app/env';
-	import type { CollidableInEvent, CollidableOutEvent } from '@draggable/Plugins/Collidable';
+	import { browser } from '$app/environment';
+	import type { CollideInEvent, CollideOutEvent } from '@draggable/Plugins/Collidable';
 
 	import Cube from '@src/components/Cube/Cube.svelte';
 	import { onMount } from 'svelte';
@@ -39,12 +39,12 @@
 				canPlayOverSound = false;
 			});
 
-			draggable.on('collide:in', ({ collidingElement }: CollidableInEvent) => {
+			draggable.on('collide:in', ({ collidingElement }: CollideInEvent) => {
 				soundEffects.single.play('cubeCollide');
 				collidingElement.classList.add('colliding');
 			});
 
-			draggable.on('collide:out', ({ collidingElement }: CollidableOutEvent) => {
+			draggable.on('collide:out', ({ collidingElement }: CollideOutEvent) => {
 				collidingElement.classList.remove('colliding');
 			});
 		}
@@ -77,7 +77,7 @@
 						/>
 					</svg>
 				</div>
-				<div bind:this={container} class="cubes__frame cubes__frame--collidable" tabindex="0">
+				<div bind:this={container} class="cubes__frame cubes__frame--collidable">
 					<Cube
 						classes="cube--solo theme--candy collidable__cube-1 collision-wall"
 						faces={{ top: { piece: 'elbow', rotation: 270 } }}

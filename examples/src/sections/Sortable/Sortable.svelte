@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { browser } from '$app/env';
+	import { browser } from '$app/environment';
 	import { debounce } from 'lodash';
 	import Cube from '@src/components/Cube/Cube.svelte';
 	import { onMount } from 'svelte';
@@ -57,7 +57,7 @@
 						/>
 					</svg>
 				</div>
-				<div bind:this={container} class="cubes__frame cubes__frame--sortable" tabindex="0">
+				<div bind:this={container} class="cubes__frame cubes__frame--sortable">
 					<Cube
 						classes="cube--solo theme--watermelon draggable-source"
 						faces={{ right: { piece: 'elbow', rotation: 270 } }}

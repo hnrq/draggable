@@ -3,7 +3,7 @@
 
 	import Block from '@src/components/Block/Block.svelte';
 	import PageHeader from '@src/components/PageHeader/PageHeader.svelte';
-	import { browser } from '$app/env';
+	import { browser } from '$app/environment';
 
 	let container: HTMLElement;
 

@@ -5,7 +5,7 @@
 	import type { DragStartEvent } from '@draggable/Draggable';
 	import type { SortableSortedEvent, SortableSortEvent } from '@draggable/Sortable';
 	import PageHeader from '@src/components/PageHeader/PageHeader.svelte';
-	import { browser } from '$app/env';
+	import { browser } from '$app/environment';
 
 	let containers: HTMLElement[] = [];
 

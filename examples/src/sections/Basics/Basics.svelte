@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import { browser } from '$app/env';
+	import { browser } from '$app/environment';
 	import Cube from '@src/components/Cube/Cube.svelte';
 	import type { DragOverEvent, DragStartEvent } from '@draggable/Draggable';
 	import type { SnapInEvent } from '@draggable/Plugins/Snappable';
@@ -105,7 +105,7 @@
 						/>
 					</svg>
 				</div>
-				<div bind:this={container} class="cubes__frame cubes__frame--basics" tabindex="0">
+				<div bind:this={container} class="cubes__frame cubes__frame--basics">
 					<!-- Eggplant Cubes -->
 					<Cube
 						id="basics__cube-1"

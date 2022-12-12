@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { browser } from '$app/env';
+	import { browser } from '$app/environment';
 
 	import type { DragMoveEvent, DragStartEvent, MirrorCreateEvent } from '@draggable/Draggable';
 	import type Position from '@src/common/types/Position';

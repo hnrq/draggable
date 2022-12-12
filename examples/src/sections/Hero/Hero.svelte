@@ -1,7 +1,7 @@
 <script lang="ts">
 	import './styles/index.scss';
 
-	import { browser } from '$app/env';
+	import { browser } from '$app/environment';
 	import type { DragOverEvent, DragStartEvent } from '@draggable/Draggable';
 
 	import Brand from '@src/components/Brand/Brand.svelte';
@@ -65,7 +65,7 @@
 				>
 				<span class="helper-bullet">•</span>
 				<a
-					href="https://shopify.github.io/draggable/docs"
+					href="https://draggable-puce.vercel.app//docs"
 					class="link"
 					title="View the codebase documentation"
 					data-gtag-category="Secondary CTA">View documentation</a

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import './styles/index.scss';
 
-	import { browser } from '$app/env';
+	import { browser } from '$app/environment';
 
 	import Cube from '@src/components/Cube/Cube.svelte';
 	import { onMount } from 'svelte';
@@ -255,7 +255,7 @@
 					class="Link"
 					title="View MIT License"
 					target="_blank"
-					rel="noopener">MIT license</a
+					rel="noreferrer">MIT license</a
 				>.
 			</p>
 			<p>You are free to use the code from this library for both personal and commercial use.</p>

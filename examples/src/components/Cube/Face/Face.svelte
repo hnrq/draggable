@@ -34,6 +34,7 @@
 	data-face={side}
 	class="face__wrapper"
 	class:draggable-source={draggable}
+	role="button"
 	tabindex={piece !== undefined ? 0 : undefined}
 >
 	<div class="face__pop">

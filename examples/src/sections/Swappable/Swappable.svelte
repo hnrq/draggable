@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { browser } from '$app/env';
+	import { browser } from '$app/environment';
 	import type { SwappableSwappedEvent } from '@draggable/Swappable';
 
 	import Cube from '@src/components/Cube/Cube.svelte';

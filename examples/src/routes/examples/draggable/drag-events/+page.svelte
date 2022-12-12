@@ -6,7 +6,7 @@
 	import PillSwitch from '@src/components/PillSwitch/PillSwitch.svelte';
 	import { translateMirror } from '@src/utils';
 	import PageHeader from '@src/components/PageHeader/PageHeader.svelte';
-	import { browser } from '$app/env';
+	import { browser } from '$app/environment';
 
 	let container: HTMLElement;
 	let isToggled = false;
@@ -15,10 +15,10 @@
 	let dragRect: DOMRect;
 	let dragThreshold: number;
 
+	console.log('aaaaaaa');
 	onMount(async () => {
 		if (browser) {
 			const { Draggable } = await import('@draggable');
-
 			const draggable = new Draggable([container.querySelector('.pill-switch') as HTMLElement], {
 				draggable: '.pill-switch__control',
 				delay: 0
@@ -27,7 +27,7 @@
 			// --- Draggable events --- //
 			draggable.on('drag:start', (evt: DragStartEvent) => {
 				document.addEventListener('keyup', abortDragOnESC);
-
+				console.log('aaaaaaa');
 				initialMousePosition = {
 					x: evt.sensorEvent.clientX,
 					y: evt.sensorEvent.clientY

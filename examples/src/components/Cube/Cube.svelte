@@ -13,7 +13,7 @@
 	export let hideOutline: boolean = false;
 </script>
 
-<div {id} class={classNames('cube', classes)} tabindex="0">
+<div {id} class={classNames('cube', classes)}>
 	<div class="jelly">
 		<div class="jelly__interior">
 			<Face side="left" {...faces.left} />
